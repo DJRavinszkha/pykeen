@@ -110,6 +110,10 @@ class LineaRE(EntityRelationEmbeddingModel):
                 embedding_dim=self.embedding_dim,
                 relation_dim=self.relation_dim,
             ),
+        )
+
+        zeros_(self.wrh.weight)
+        
         self.wrt = Embedding.init_with_device(
             num_embeddings=triples_factory.num_relations,
             embedding_dim=relation_dim,
@@ -120,9 +124,13 @@ class LineaRE(EntityRelationEmbeddingModel):
                 embedding_dim=self.embedding_dim,
                 relation_dim=self.relation_dim,
             ),
-        zeros_(self.wrh.weight),
-        zeros_(self.wrt.weight),
         )
+        zeros_(self.wrt.weight)
+
+    def _reset_parameters_(self):  # noqa: D102
+        super()._reset_parameters_()
+        self.wrh.reset_parameters()
+        self.wrt.reset_parameters()
 
     @staticmethod
     def interaction_function(
