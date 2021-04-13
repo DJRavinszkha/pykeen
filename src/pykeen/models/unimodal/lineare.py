@@ -124,11 +124,6 @@ class LineaRE(EntityRelationEmbeddingModel):
         zeros_(self.wrt.weight),
         )
 
-    def _reset_parameters_(self):  # noqa: D102
-        super()._reset_parameters_()
-        self.wrh.reset_parameters()
-        self.wrt.reset_parameters()
-
     @staticmethod
     def interaction_function(
         h: torch.FloatTensor,
