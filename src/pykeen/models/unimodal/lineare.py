@@ -13,7 +13,6 @@ from ..base import EntityRelationEmbeddingModel
 from ...constants import DEFAULT_EMBEDDING_HPO_EMBEDDING_DIM_RANGE
 from ...losses import Loss
 from ...nn.emb import Embedding, EmbeddingSpecification
-from ...nn.init import zeros_
 from ...regularizers import Regularizer
 from ...triples import TriplesFactory
 from ...typing import Constrainer, DeviceHint, Hint, Initializer
@@ -112,7 +111,7 @@ class LineaRE(EntityRelationEmbeddingModel):
             ),
         )
 
-        zeros_(self.wrh.weight)
+        nn.init.zeros_(self.wrh.weight)
         
         self.wrt = Embedding.init_with_device(
             num_embeddings=triples_factory.num_relations,
@@ -125,7 +124,7 @@ class LineaRE(EntityRelationEmbeddingModel):
                 relation_dim=self.relation_dim,
             ),
         )
-        zeros_(self.wrt.weight)
+        nn.init.zeros_(self.wrt.weight)
 
     def _reset_parameters_(self):  # noqa: D102
         super()._reset_parameters_()
